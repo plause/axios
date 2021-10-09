@@ -112,4 +112,24 @@ describe('instance', function () {
       }, 100);
     });
   });
+
+  describe("getUri method", function () {
+    it('should compute request uri based on merged config', function () {
+      var params = { page: 1 };
+      var config = { url: '/u3', params, paramsSerializer: () => 'page=3' };
+
+      expect(instance.getUri({ url: '/u1' })).toBe('/u1');
+      expect(instance.getUri({ url: '/u2', params })).toBe('/u2?page=1');
+      expect(instance.getUri(config)).toBe('/u3?page=3');
+    });
+
+    it('should honor baseURL when a flag is set', function () {
+      var url = '/path/to/resource';
+      var baseURL = 'https://some-domain.com';
+
+      expect(instance.getUri({ url, baseURL })).toBe(url);
+      expect(instance.getUri({ url, baseURL }, true)).toBe(`${baseURL}${url}`);
+    });
+  })
+
 });

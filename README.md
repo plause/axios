@@ -279,6 +279,29 @@ The available instance methods are listed below. The specified config will be me
 ##### axios#patch(url[, data[, config]])
 ##### axios#getUri([config])
 
+Compute request URI to a url based on merged config.
+
+```js
+const uri = axios.getUri({
+  url: '/path/to/resource',
+  params: { page: 3 }
+});
+// uri is: /path/to/resource?page=3
+```
+
+>Note this method ignores `baseURL` by default.
+
+To change this behavior, pass `true` as second parameter:
+
+```js
+const uri = axios.getUri({
+  baseURL: 'https://some-domain.com',
+  url: '/path/to/resource',
+  params: { page: 3 }
+}, true);
+// uri is: https//some-domain.com/path/to/resource?page=3
+```
+
 ## Request Config
 
 These are the available config options for making requests. Only the `url` is required. Requests will default to `GET` if `method` is not specified.
